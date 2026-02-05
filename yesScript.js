@@ -51,6 +51,7 @@ function setupGallery(){
         "./images/UsGallery/IMG_7078.jpg",
         "./images/UsGallery/IMG_7352.mp4",
         "./images/UsGallery/IMG_9019.jpg",
+        "./images/UsGallery/beMine.jpg",
     ];
     
     let currentIndex = 0;
@@ -76,3 +77,4 @@ function setupGallery(){
     // updateImage(); // Set initial image
 
 }
+

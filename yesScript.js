@@ -1,83 +1,109 @@
-document.addEventListener("DOMContentLoaded", function () {
-    // Start the animation immediately when the page loads
-    startConfetti();
+// =======================
+// HEART FIREWORKS + CONFETTI
+// Runs automatically on page load
+// No HTML changes required
+// =======================
+
+document.addEventListener("DOMContentLoaded", () => {
+  // ---------- CONFETTI ----------
+  function launchConfetti() {
+    confetti({
+      particleCount: 150,
+      spread: 360,
+      origin: {
+        x: Math.random(),
+        y: Math.random() * 0.6
+      },
+      shapes: ["heart"],
+      colors: ["#ff4d6d", "#ff758f", "#ffb3c6", "#ffffff"]
+    });
+  }
+
+  setInterval(launchConfetti, 1200);
+
+  // ---------- FIREWORKS ----------
+  const canvas = document.createElement("canvas");
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext("2d");
+
+  canvas.style.position = "fixed";
+  canvas.style.top = "0";
+  canvas.style.left = "0";
+  canvas.style.width = "100vw";
+  canvas.style.height = "100vh";
+  canvas.style.pointerEvents = "none";
+  canvas.style.zIndex = "9999";
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas);
+
+  const fireworks = [];
+
+  class HeartParticle {
+    constructor(x, y) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = Math.random() * 4 + 2;
+
+      this.x = x;
+      this.y = y;
+      this.vx = Math.cos(angle) * speed;
+      this.vy = Math.sin(angle) * speed;
+      this.life = 100;
+      this.size = Math.random() * 6 + 4;
+      this.color = `hsl(${Math.random() * 360}, 100%, 70%)`;
+    }
+
+    draw() {
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.scale(this.size / 10, this.size / 10);
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(-5, -5, -10, 5, 0, 10);
+      ctx.bezierCurveTo(10, 5, 5, -5, 0, 0);
+      ctx.fillStyle = this.color;
+      ctx.fill();
+      ctx.restore();
+    }
+
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      this.life--;
+    }
+  }
+
+  function spawnFirework() {
+    const x = Math.random() * canvas.width;
+    const y = Math.random() * canvas.height * 0.6;
+
+    for (let i = 0; i < 40; i++) {
+      fireworks.push(new HeartParticle(x, y));
+    }
+  }
+
+  setInterval(spawnFirework, 900);
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = fireworks.length - 1; i >= 0; i--) {
+      const p = fireworks[i];
+      p.update();
+      p.draw();
+
+      if (p.life <= 0) {
+        fireworks.splice(i, 1);
+      }
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
 });
-
-function startConfetti() {
-    const duration = 15 * 1000,
-    animationEnd = Date.now() + duration,
-    defaults = { 
-        startVelocity: 30, 
-        spread: 360, 
-        ticks: 60, 
-        zIndex: 0, 
-        shapes: ["heart", "circle"],
-        colors: ["#FFC0CB", "#FF69B4", "#FF1493", "#C71585"], 
-        scalar: 2.25 
-    };
-
-    function randomInRange(min, max) {
-        return Math.random() * (max - min) + min;
-    }
-
-    const interval = setInterval(function() {
-        const timeLeft = animationEnd - Date.now();
-
-        if (timeLeft <= 0) {
-            return clearInterval(interval);
-        }
-
-        const particleCount = 50 * (timeLeft / duration);
-
-        // Using tsparticles confetti with correct API
-        tsParticles.confetti(defaults.shapes, {
-            ...defaults,
-            particleCount,
-            origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
-        });
-        
-        tsParticles.confetti(defaults.shapes, {
-            ...defaults,
-            particleCount,
-            origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
-        });
-    }, 250);
-}
-
-function setupGallery(){
-    const images = [
-        "./images/UsGallery/388ECE92-1F31-47C8-8714-CD10694DDFE4.jpg",
-        "./images/UsGallery/IMG_0090.jpg",
-        "./images/UsGallery/IMG_3444.jpg",
-        "./images/UsGallery/IMG_3737.jpg",
-        "./images/UsGallery/IMG_4437.JPG",
-        "./images/UsGallery/IMG_6198.jpg",
-        "./images/UsGallery/IMG_6321.jpg",
-        "./images/UsGallery/IMG_7078.jpg",
-        "./images/UsGallery/IMG_7352.mp4",
-        "./images/UsGallery/IMG_9019.jpg",
-        "./images/UsGallery/beMine.jpg",
-    ];
-    
-    let currentIndex = 0;
-    const galleryImg = document.getElementById("pics");
-    const nextButton = document.getElementById("next-btn");
-    const prevButton = document.getElementById("prev-btn");
-
-    function updateImage() {
-        galleryImg.src = images[currentIndex];
-    }
-    updateImage();
-
-    nextButton.addEventListener("click", function () {
-        currentIndex = (currentIndex + 1) % images.length;
-        updateImage();
-    });
-
-    prevButton.addEventListener("click", function () {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-        updateImage();
-    });
-
-    // updateImage(); // Set initial image
-}

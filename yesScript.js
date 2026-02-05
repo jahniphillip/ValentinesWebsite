@@ -1,8 +1,3 @@
-// =======================
-// FIREWORKS → TEXT → VIDEO SEQUENCE
-// No HTML changes required
-// =======================
-
 document.addEventListener("DOMContentLoaded", () => {
   let confettiInterval;
   let fireworkInterval;
@@ -105,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   animate();
 
-  // ---------- STOP ANIMATIONS AFTER 7 SECONDS ----------
+  // ---------- STOP AFTER 7 SECONDS ----------
   setTimeout(() => {
     animationRunning = false;
     clearInterval(confettiInterval);
@@ -113,8 +108,25 @@ document.addEventListener("DOMContentLoaded", () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     canvas.remove();
 
-    showTypingMessage();
+    fadeOutOriginalText();
   }, 7000);
+
+  // ---------- FADE OUT ORIGINAL TEXT ----------
+  function fadeOutOriginalText() {
+    const originalText = document.getElementById("typed-output3");
+
+    if (originalText) {
+      originalText.style.transition = "opacity 0.8s ease";
+      originalText.style.opacity = "0";
+
+      setTimeout(() => {
+        originalText.remove();
+        showTypingMessage();
+      }, 800);
+    } else {
+      showTypingMessage();
+    }
+  }
 
   // ---------- TYPING TEXT ----------
   function showTypingMessage() {
@@ -143,7 +155,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (index === text.length) {
         clearInterval(typingInterval);
-
         setTimeout(() => {
           textEl.remove();
           showVideo();
@@ -155,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ---------- VIDEO POP-IN ----------
   function showVideo() {
     const video = document.createElement("video");
-    video.src = "images/iloveyoubih.mp4"; // 👈 CHANGE FILE NAME IF NEEDED
+    video.src = "surprise.mp4"; // change if needed
     video.autoplay = true;
     video.controls = true;
     video.playsInline = true;
@@ -175,7 +186,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.body.appendChild(video);
 
-    // Pop animation
     requestAnimationFrame(() => {
       video.style.transform = "translate(-50%, -50%) scale(1)";
     });

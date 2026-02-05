@@ -91,8 +91,10 @@ function changePicture() {
         image.src = "./images/NoReactionPics/cheezin.jpg"
         image.classList.add("noReactionPic");
         imageText.textContent = "Yay, I knew you'd say yes!"
-        startConfetti();
+        startConfetti
+		window.location.href = "yes-page.html";
     });
 }
+
 
 

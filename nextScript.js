@@ -1,10 +1,14 @@
 document.addEventListener("DOMContentLoaded", function() {
     const noReactionPics = [
-        "./images/NoReactionPics/no1.jpg",
-        "./images/NoReactionPics/no2.jpg",
-        "./images/NoReactionPics/no3.jpg",
-        "./images/NoReactionPics/no4.jpg",
-        "./images/NoReactionPics/no5.jpg"
+        "./images/NoReactionPics/IMG_6684.JPG",
+        "./images/NoReactionPics/IMG_6754.JPG",
+        "./images/NoReactionPics/IMG_7105.JPG",
+        "./images/NoReactionPics/IMG_7278.JPG",
+	    "./images/NoReactionPics/IMG_7575.JPG",
+	    "./images/NoReactionPics/IMG_7579.JPG",
+	    "./images/NoReactionPics/IMG_7581.JPG",
+	    "./images/NoReactionPics/IMG_7582.JPG",
+        "./images/NoReactionPics/IMG_7583.JPG"
     ];
 
     const imageText = document.getElementById("image-text");

@@ -166,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ---------- VIDEO POP-IN ----------
   function showVideo() {
     const video = document.createElement("video");
-    video.src = "surprise.mp4"; // change if needed
+    video.src = "images/iloveyoubih.mp4"; // change if needed
     video.autoplay = true;
     video.controls = true;
     video.playsInline = true;
@@ -191,3 +191,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+

@@ -75,6 +75,4 @@ function setupGallery(){
     });
 
     // updateImage(); // Set initial image
-
 }
-

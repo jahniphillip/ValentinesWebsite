@@ -1,27 +1,24 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Start the fireworks animation immediately
-    startFireworks();
-
-    // Only set up the gallery if the elements actually exist in the HTML
-    const galleryImg = document.getElementById("pics");
-    if (galleryImg) {
-        setupGallery();
-    }
+    // Start the animation immediately when the page loads
+    startConfetti();
 });
 
-function startFireworks() {
-    const duration = 15 * 1000; // Plays for 15 seconds
-    const animationEnd = Date.now() + duration;
-
-    const defaults = { 
+function startConfetti() {
+    const duration = 15 * 1000,
+    animationEnd = Date.now() + duration,
+    defaults = { 
         startVelocity: 30, 
         spread: 360, 
         ticks: 60, 
-        zIndex: 1000, 
-        shapes: ["heart"],
+        zIndex: 0, 
+        shapes: ["heart", "circle"],
         colors: ["#FFC0CB", "#FF69B4", "#FF1493", "#C71585"], 
-        scalar: 2 
+        scalar: 2.25 
     };
+
+    function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+    }
 
     const interval = setInterval(function() {
         const timeLeft = animationEnd - Date.now();
@@ -32,19 +29,22 @@ function startFireworks() {
 
         const particleCount = 50 * (timeLeft / duration);
 
-        // Fireworks effect: Bursts at random spots on the screen
-        confetti({
+        // Using tsparticles confetti with correct API
+        tsParticles.confetti(defaults.shapes, {
             ...defaults,
             particleCount,
-            origin: { 
-                x: Math.random() * (0.8 - 0.2) + 0.2, // Random horizontal
-                y: Math.random() - 0.2 // Random vertical
-            }
+            origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+        });
+        
+        tsParticles.confetti(defaults.shapes, {
+            ...defaults,
+            particleCount,
+            origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
         });
     }, 250);
 }
 
-function setupGallery() {
+function setupGallery(){
     const images = [
         "./images/UsGallery/388ECE92-1F31-47C8-8714-CD10694DDFE4.jpg",
         "./images/UsGallery/IMG_0090.jpg",
@@ -65,22 +65,19 @@ function setupGallery() {
     const prevButton = document.getElementById("prev-btn");
 
     function updateImage() {
-        if (galleryImg) galleryImg.src = images[currentIndex];
+        galleryImg.src = images[currentIndex];
     }
-
     updateImage();
 
-    if (nextButton) {
-        nextButton.addEventListener("click", function () {
-            currentIndex = (currentIndex + 1) % images.length;
-            updateImage();
-        });
-    }
+    nextButton.addEventListener("click", function () {
+        currentIndex = (currentIndex + 1) % images.length;
+        updateImage();
+    });
 
-    if (prevButton) {
-        prevButton.addEventListener("click", function () {
-            currentIndex = (currentIndex - 1 + images.length) % images.length;
-            updateImage();
-        });
-    }
+    prevButton.addEventListener("click", function () {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        updateImage();
+    });
+
+    // updateImage(); // Set initial image
 }

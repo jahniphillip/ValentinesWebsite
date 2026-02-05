@@ -23,7 +23,8 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // Button click event to go to another page
     document.getElementById("Answer-button").addEventListener("click", function() {
-        window.location.href = "next-page.html"; // Change this to your next page
+        window.location.href = "insta.html"; // Change this to your next page
     });
+
 
 });

@@ -1,25 +1,19 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Start the animation immediately
-    startFireworks();
-    
-    // Initialize gallery (if you uncomment the HTML for it)
-    if (document.getElementById("pics")) {
-        setupGallery();
-    }
+    // Start the animation immediately when the page loads
+    startConfetti();
 });
 
-function startFireworks() {
-    const duration = 15 * 1000; // 15 seconds
-    const animationEnd = Date.now() + duration;
-
-    const defaults = { 
+function startConfetti() {
+    const duration = 15 * 1000,
+    animationEnd = Date.now() + duration,
+    defaults = { 
         startVelocity: 30, 
         spread: 360, 
         ticks: 60, 
         zIndex: 0, 
-        shapes: ["heart"], // tsparticles bundle supports 'heart'
-        colors: ["#FFC0CB", "#FF69B4", "#FF1493", "#C71585"],
-        scalar: 2 // Slightly smaller for better performance
+        shapes: ["heart", "circle"],
+        colors: ["#FFC0CB", "#FF69B4", "#FF1493", "#C71585"], 
+        scalar: 2.25 
     };
 
     function randomInRange(min, max) {
@@ -35,32 +29,19 @@ function startFireworks() {
 
         const particleCount = 50 * (timeLeft / duration);
 
-        // Burst 1: Random position (Fireworks effect)
-        confetti({
+        // Using tsparticles confetti with correct API
+        tsParticles.confetti(defaults.shapes, {
             ...defaults,
             particleCount,
-            origin: { x: randomInRange(0.1, 0.9), y: randomInRange(0.1, 0.4) }
+            origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
         });
-
-        // Burst 2: Side Cannon Left
-        confetti({
+        
+        tsParticles.confetti(defaults.shapes, {
             ...defaults,
-            particleCount: 25,
-            angle: 60,
-            spread: 55,
-            origin: { x: 0, y: 0.6 }
+            particleCount,
+            origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
         });
-
-        // Burst 3: Side Cannon Right
-        confetti({
-            ...defaults,
-            particleCount: 25,
-            angle: 120,
-            spread: 55,
-            origin: { x: 1, y: 0.6 }
-        });
-
-    }, 500); // Fires every half second
+    }, 250);
 }
 
 function setupGallery(){
@@ -83,12 +64,9 @@ function setupGallery(){
     const nextButton = document.getElementById("next-btn");
     const prevButton = document.getElementById("prev-btn");
 
-    if (!galleryImg || !nextButton || !prevButton) return;
-
     function updateImage() {
         galleryImg.src = images[currentIndex];
     }
-    
     updateImage();
 
     nextButton.addEventListener("click", function () {
@@ -100,4 +78,6 @@ function setupGallery(){
         currentIndex = (currentIndex - 1 + images.length) % images.length;
         updateImage();
     });
+
+    // updateImage(); // Set initial image
 }

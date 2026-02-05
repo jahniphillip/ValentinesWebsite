@@ -41,16 +41,16 @@ function startConfetti() {
 
 function setupGallery(){
     const images = [
-        "./images/UsGallery/us1.jpg",
-        "./images/UsGallery/us2.jpg",
-        "./images/UsGallery/us3.jpg",
-        "./images/UsGallery/us4.jpg",
-        "./images/UsGallery/us5.jpg",
-        "./images/UsGallery/us6.jpg",
-        "./images/UsGallery/us7.jpg",
-        "./images/UsGallery/us8.jpg",
-        "./images/UsGallery/us9.jpg",
-        "./images/UsGallery/us10.jpg",
+        "./images/UsGallery/388ECE92-1F31-47C8-8714-CD10694DDFE4.jpg",
+        "./images/UsGallery/IMG_0090.jpg",
+        "./images/UsGallery/IMG_3444.jpg",
+        "./images/UsGallery/IMG_3737.jpg",
+        "./images/UsGallery/IMG_4437.JPG",
+        "./images/UsGallery/IMG_6198.jpg",
+        "./images/UsGallery/IMG_6321.jpg",
+        "./images/UsGallery/IMG_7078.jpg",
+        "./images/UsGallery/IMG_7352.mp4",
+        "./images/UsGallery/IMG_9019.jpg",
     ];
     
     let currentIndex = 0;
@@ -74,4 +74,5 @@ function setupGallery(){
     });
 
     // updateImage(); // Set initial image
+
 }

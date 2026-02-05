@@ -66,10 +66,16 @@ function changePicture() {
 
     // imageContainer
 
-
+	const noClickSound = new Audio("images/sad-bomboclat.mp3");
+	
     noButton.addEventListener("click", function () {
         imageText.textContent = "Are you sure about that??"
-        // Choose a random image
+        
+		// Restart sound if clicked multiple times
+  		noClickSound.currentTime = 0;
+    	noClickSound.play();
+	
+		// Choose a random image
         const randomIndex = Math.floor(Math.random() * noReactionPics.length);
         const randomImage = noReactionPics[randomIndex];
 
@@ -95,6 +101,7 @@ function changePicture() {
 		window.location.href = "yes-page.html";
     });
 }
+
 
 
 
